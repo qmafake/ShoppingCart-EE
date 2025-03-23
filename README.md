@@ -1,7 +1,7 @@
 ## :warning: Please read these instructions carefully and entirely first
 * Clone this repository to your local machine.
 * Use your IDE of choice to complete the assignment.
-* When you have completed the assignment, you need to  push your code to this repository and [mark the assignment as completed by clicking here]({{submission_link}}).
+* When you have completed the assignment, you need to  push your code to this repository and [mark the assignment as completed by clicking here](https://app.snapcode.review/submission_links/732f83d3-1d83-40a8-bd56-35611198c50d).
 * Once you mark it as completed, your access to this repository will be revoked. Please make sure that you have completed the assignment and pushed all code from your local machine to this repository before you click the link.
 * There is no time limit for this task - however, for guidance, it is expected to typically take around 1-2 hours.
 
