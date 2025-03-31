@@ -82,6 +82,4 @@ public class CartController {
 
         return new ResponseEntity<>(responseMsg, HttpStatus.OK);
     }
-
-
 }
