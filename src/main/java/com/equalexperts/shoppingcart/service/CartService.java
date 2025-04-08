@@ -70,7 +70,23 @@ public class CartService {
         return checkoutMsg.toString();
     }
 
-    public void deleteProduct(String productName) {
+    public void updateCart(CartItem cartItem) {
+
+        String productName = cartItem.getProductName();
+
+        int additionalQuantity = cartItem.getQuantity();
+
+        currentQuantity = cartItemsMap.get(productName).getQuantity();
+
+        updatedQuantity = currentQuantity + additionalQuantity;
+
+        //Update cart item quantity
+        cartItemsMap.get(productName).setQuantity(updatedQuantity);
+
+        logger.info("Increased quantity of {} from {} to {}", productName, currentQuantity, updatedQuantity);
+    }
+
+    public void deleteCartItem(String productName) {
 
         if (! cartItemsMap.containsKey(productName)) {
 
@@ -88,23 +104,12 @@ public class CartService {
             cartItemsMap.get(productName).setQuantity(updatedQuantity);
 
             logger.info("Reduced quantity of {} from {} to {}", productName, currentQuantity, updatedQuantity);
+
+            if(updatedQuantity == 0){
+                cartItemsMap.remove(productName); //If quantity gets to zero clear item from cart
+            }
+
         }
-    }
-
-    public void updateCart(CartItem cartItem) {
-
-        String productName = cartItem.getProductName();
-
-        int additionalQuantity = cartItem.getQuantity();
-
-        currentQuantity = cartItemsMap.get(productName).getQuantity();
-
-        updatedQuantity = currentQuantity + additionalQuantity;
-
-        //Update cart item quantity
-        cartItemsMap.get(productName).setQuantity(updatedQuantity);
-
-        logger.info("Increased quantity of {} from {} to {}", productName, currentQuantity, updatedQuantity);
     }
 
     public StringBuilder getCheckoutMsg() {

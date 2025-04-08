@@ -78,7 +78,7 @@ public class CartController {
 
         logger.info("Removing cart item: {}", productName);
 
-        cartService.deleteProduct(productName);
+        cartService.deleteCartItem(productName);
 
         return new ResponseEntity<>("Product removed successfully", HttpStatus.OK);
     }
