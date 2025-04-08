@@ -2,7 +2,7 @@
 <configuration>
     <appender name = "console" class = "ch.qos.logback.core.ConsoleAppender">
         <encoder>
-            <pattern>%d [%C:%L] %-5level %msg%n</pattern>
+            <pattern>%d [%C{1}:%L] %-5level %msg%n</pattern>
         </encoder>
     </appender>
     <appender name="file" class="ch.qos.logback.core.rolling.RollingFileAppender">

@@ -35,40 +35,28 @@ public class CartController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<Object> addItem(@RequestBody CartItem item) {
+    public ResponseEntity<Object> add(@RequestBody CartItem cartItem) {
 
-        String productName = item.getProductName();
+        String productName = cartItem.getProductName();
 
         ProductPrice productPrice =  productPriceClientService.fetchItemPrice(productName);
-        item.setUnitPrice(productPrice.getPrice());
 
-        logger.info("{} cost: {}", productName, productPrice.getPrice());
+        cartItem.setUnitPrice(productPrice.getPrice());
 
         if (!cartService.getCartItemsMap().containsKey(productName)){
 
-            logger.info("Adding to cart for item: {}", productName);
-
-            cartService.getCartItemsMap().put(productName, item);
+            cartService.getCartItemsMap().put(productName, cartItem);
 
             logger.info("Item added to cart: {}", cartService.getCartItemsMap().get(productName).getProductName());
 
             return new ResponseEntity<>(cartService.getCartItemsMap().get(productName).getProductName()
-                    + " Added to cart", HttpStatus.OK);
+                    + " added to cart", HttpStatus.OK);
         }
         else {
 
-            logger.info("Update cart details for item: {}", productName);
+            logger.info("Updating cart details for item: {}", productName);
 
-            int currentQuantity = cartService.getCartItemsMap().get(productName).getQuantity();
-            int additionalQuantity = item.getQuantity();
-            int newQuantity = currentQuantity + additionalQuantity;
-
-            //Update cart item quantity
-            cartService.getCartItemsMap().get(productName).setQuantity(newQuantity);
-
-            logger.info("Current Qty: {}, Additional Qty {}", currentQuantity, additionalQuantity);
-            logger.info("Confirm new Qty updated in memory map: {}",
-                    cartService.getCartItemsMap().get(productName).getQuantity());
+            cartService.updateCart(cartItem);
 
             return new ResponseEntity<>(cartService.getCartItemsMap().get(productName).getProductName()
                     + " quantity updated", HttpStatus.OK);
@@ -78,8 +66,20 @@ public class CartController {
     @GetMapping("/checkout")
     public ResponseEntity<Object>  checkout() {
 
-        String responseMsg = cartService.calculateSubTotal();
+        cartService.checkoutCart();
 
-        return new ResponseEntity<>(responseMsg, HttpStatus.OK);
+        return new ResponseEntity<>(cartService.getCheckoutMsg(), HttpStatus.OK);
+    }
+
+    @DeleteMapping("/remove")
+    public ResponseEntity<Object> remove(@RequestBody CartItem item) {
+
+        String productName = item.getProductName();
+
+        logger.info("Removing cart item: {}", productName);
+
+        cartService.deleteProduct(productName);
+
+        return new ResponseEntity<>("Product removed successfully", HttpStatus.OK);
     }
 }

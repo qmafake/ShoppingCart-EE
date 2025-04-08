@@ -65,13 +65,13 @@ class CartControllerTest {
 	}
 
 	@Test
-	void testAddItem_NewItem() {
+	void testAddItem_New() {
 		// Arrange
 		when(productPriceClientService.fetchItemPrice(cartItem.getProductName())).thenReturn(productPrice);
 		when(cartService.getCartItemsMap()).thenReturn(Collections.emptyMap());
 
 		// Act
-		ResponseEntity<Object> response = cartController.addItem(cartItem);
+		ResponseEntity<Object> response = cartController.add(cartItem);
 
 		// Assert
 		assertEquals(HttpStatus.OK, response.getStatusCode());
@@ -82,7 +82,7 @@ class CartControllerTest {
 	}
 
 	@Test
-	void testAddItem_ExistingItem() {
+	void testAddItem_Existing() {
 		// Arrange
 		CartItem existingItem = new CartItem();
 		existingItem.setProductName("Test Item");
@@ -91,7 +91,7 @@ class CartControllerTest {
 		when(productPriceClientService.fetchItemPrice(cartItem.getProductName())).thenReturn(productPrice);
 
 		// Act
-		ResponseEntity<Object> response = cartController.addItem(cartItem);
+		ResponseEntity<Object> response = cartController.add(cartItem);
 
 		// Assert
 		assertEquals(HttpStatus.OK, response.getStatusCode());
@@ -106,7 +106,7 @@ class CartControllerTest {
 	void testCheckout() {
 		// Arrange
 		String expectedResponse = "Subtotal: 100.0";
-		when(cartService.calculateSubTotal()).thenReturn(expectedResponse);
+		when(cartService.checkoutCart()).thenReturn(expectedResponse);
 
 		// Act
 		ResponseEntity<Object> response = cartController.checkout();
@@ -114,7 +114,7 @@ class CartControllerTest {
 		// Assert
 		assertEquals(HttpStatus.OK, response.getStatusCode());
 		assertEquals(expectedResponse, response.getBody());
-		verify(cartService, times(1)).calculateSubTotal();
+		verify(cartService, times(1)).checkoutCart();
 	}
 }
 

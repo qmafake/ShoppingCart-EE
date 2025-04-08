@@ -28,35 +28,33 @@ public class ProductPriceClientService {
         logger.info("Fetching price for - {}", product);
 
         try {
-            // Construct the URL for the product endpoint
+
             String priceUrlPath = "https://equalexperts.github.io/backend-take-home-test-data/" + product + ".json";
-//            String priceUrlPath = priceUrl.append(product).append(".json").toString();
+//            String priceUrlPath = priceUrl.append(product).append(".json").toString(); //TODO:
 
             HttpResponse<JsonNode> response = Unirest.get(priceUrlPath)
                     .header("accept", "application/json")
                     .asJson();
 
             if (response.getStatus() == 200) {
-                // Parse the JSON response
+
                 JsonObject responseJson = JsonParser.parseString(response.getBody().toString()).getAsJsonObject();
 
-                // Extract the title and price fields from the JSON response
                 String title = responseJson.get("title").getAsString();
                 double price = responseJson.get("price").getAsDouble();
 
                 logger.info("Retrieved Product: {}, Price: {}", title, price);
 
-
                 productPrice.setProductName(title);
                 productPrice.setPrice(BigDecimal.valueOf(price));
 
             } else {
-                System.out.println("Request failed. Response Code: " + response.getStatus());
+                logger.info("Request failed. Response Code: " + response.getStatus());
             }
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            // Close Unirest when done to clean up resources
+
             Unirest.shutDown();
         }
 

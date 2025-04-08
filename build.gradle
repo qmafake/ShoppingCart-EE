@@ -5,7 +5,7 @@ plugins {
 }
 
 group = 'com.equalexperts'
-version = '0.0.1-SNAPSHOT'
+version = '1.0.0'
 
 description = 'Shopping Cart Service'
 
@@ -27,7 +27,7 @@ repositories {
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.slf4j:jcl-over-slf4j:2.0.3'
-    implementation 'com.google.code.gson:gson:2.8.8'
+    implementation 'com.google.code.gson:gson:2.8.9'
     implementation 'com.konghq:unirest-java:3.13.1'
 
 //    compileOnly "org.projectlombok:lombok:1.18.36"
