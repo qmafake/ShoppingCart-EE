@@ -74,7 +74,7 @@ We value simplicity as an architectural virtue and as a development practice. So
 * Gradle 8.10
 * Java 18
 
-### Running jar file
+### Running the application
 * After building the project a JAR file is placed in: <project_home_directory>\build\libs\shopping-cart-1.0.0.jar
 * Application can be launched from command line using the command: java -jar shopping-cart-1.0.0.jar
 * Postman can be used to test the application. See postman collection in: <project_home_directory>\src\main\resources\
