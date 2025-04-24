@@ -32,12 +32,6 @@ dependencies {
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
-//    testImplementation 'com.github.tomakehurst:wiremock-jre8:2.35.0'
-// TODO: issue with javax.servlet namespace dependencies, SpringBoot 3+ uses jakarta.servlet. try standalone wiremock below
-//    testImplementation 'javax.servlet:javax.servlet-api:4.0.1'
-
-
-    testImplementation 'com.github.tomakehurst:wiremock-jre8-standalone:3.0.1'
 }
 
 tasks.named('test') {

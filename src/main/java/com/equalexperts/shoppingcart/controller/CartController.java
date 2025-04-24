@@ -69,11 +69,7 @@ public class CartController {
     @GetMapping("/checkout")
     public ResponseEntity<Object>  checkout() {
 
-        logger.info("Checkout b4 msg: {}", cartService.getCheckoutMsg()); //TODO: remove
-
         cartService.checkoutCart();
-
-        logger.info("Checkout after msg: {}", cartService.getCheckoutMsg()); //TODO: remove
 
         return new ResponseEntity<>(cartService.getCheckoutMsg(), HttpStatus.OK);
     }
