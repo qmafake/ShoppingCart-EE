@@ -79,9 +79,9 @@ We value simplicity as an architectural virtue and as a development practice. So
 * Application can be launched from command line using the command: java -jar shopping-cart-1.0.0.jar
 * Postman can be used to test the application. See postman collection in: <project_home_directory>\src\main\resources\
   
---- 'Add products' - Postman call to add a product
+--- 'Add products' : Postman call to add a product
 
---- 'Checkout' - Postman to view results
+--- 'Checkout' : Postman to view results
 
 ### Assumptions made
 * For the purpose of this demo an assumption has been made that the Price API is always up. So no tests for HTTP errors have been included.
