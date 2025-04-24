@@ -19,18 +19,23 @@ public class ProductPriceClientService {
     protected Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Value("${spring.price.endpoint}")
-    StringBuilder priceUrl;
+    public String priceUrl;
 
     public ProductPrice fetchItemPrice(String product) {
 
         ProductPrice productPrice = new ProductPrice();
 
-        logger.info("Fetching price for - {}", product);
-
         try {
 
-            String priceUrlPath = "https://equalexperts.github.io/backend-take-home-test-data/" + product + ".json";
-//            String priceUrlPath = priceUrl.append(product).append(".json").toString(); //TODO:
+//            String priceUrlPath = priceUrl.concat(product).concat(".json");
+
+//            String priceUrlPath = "https://equalexperts.github.io/backend-take-home-test-data/" + product + ".json";
+
+            String priceUrlPath = "http://localhost:8099/" + product + ".json";
+            //TODO: just testing Mock Stub
+
+
+            logger.info("Fetching {} price:  {}", product, priceUrlPath);
 
             HttpResponse<JsonNode> response = Unirest.get(priceUrlPath)
                     .header("accept", "application/json")
@@ -43,7 +48,7 @@ public class ProductPriceClientService {
                 String title = responseJson.get("title").getAsString();
                 double price = responseJson.get("price").getAsDouble();
 
-                logger.info("Retrieved Product: {}, Price: {}", title, price);
+                logger.info("Product: {}, Price: {}", title, price);
 
                 productPrice.setProductName(title);
                 productPrice.setPrice(BigDecimal.valueOf(price));

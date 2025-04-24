@@ -8,6 +8,15 @@ public class CartItem {
     private int quantity;
     private BigDecimal unitPrice;
 
+    public CartItem() {
+    }
+
+    public CartItem(String product1, int qty) {
+
+        this.productName = product1;
+        this.quantity  = qty;
+    }
+
     public String getProductName() {
         return productName;
     }

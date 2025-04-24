@@ -12,20 +12,21 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/cart")
 public class CartController {
 
-    @Autowired
     private final CartService cartService;
-    @Autowired
-    ProductPriceClientService productPriceClientService;
+
+    private final ProductPriceClientService productPriceClientService;
 
     protected Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    public CartController(CartService cartService) {
+    public CartController(CartService cartService, ProductPriceClientService productPriceClientService) {
         this.cartService = cartService;
+        this.productPriceClientService = productPriceClientService;
     }
 
     @GetMapping("/view")
@@ -43,13 +44,15 @@ public class CartController {
 
         cartItem.setUnitPrice(productPrice.getPrice());
 
-        if (!cartService.getCartItemsMap().containsKey(productName)){
+        Map<String, CartItem> cartItemsMap = cartService.getCartItemsMap();
 
-            cartService.getCartItemsMap().put(productName, cartItem);
+        if (!cartItemsMap.containsKey(productName)){
 
-            logger.info("Item added to cart: {}", cartService.getCartItemsMap().get(productName).getProductName());
+            cartItemsMap.put(productName, cartItem);
 
-            return new ResponseEntity<>(cartService.getCartItemsMap().get(productName).getProductName()
+            logger.info("Item added to cart: {}", cartItemsMap.get(productName).getProductName());
+
+            return new ResponseEntity<>(cartItemsMap.get(productName).getProductName()
                     + " added to cart", HttpStatus.OK);
         }
         else {
@@ -58,7 +61,7 @@ public class CartController {
 
             cartService.updateCart(cartItem);
 
-            return new ResponseEntity<>(cartService.getCartItemsMap().get(productName).getProductName()
+            return new ResponseEntity<>(cartItemsMap.get(productName).getProductName()
                     + " quantity updated", HttpStatus.OK);
         }
     }
@@ -66,7 +69,11 @@ public class CartController {
     @GetMapping("/checkout")
     public ResponseEntity<Object>  checkout() {
 
+        logger.info("Checkout b4 msg: {}", cartService.getCheckoutMsg()); //TODO: remove
+
         cartService.checkoutCart();
+
+        logger.info("Checkout after msg: {}", cartService.getCheckoutMsg()); //TODO: remove
 
         return new ResponseEntity<>(cartService.getCheckoutMsg(), HttpStatus.OK);
     }
@@ -80,6 +87,6 @@ public class CartController {
 
         cartService.deleteCartItem(productName);
 
-        return new ResponseEntity<>("Product removed successfully", HttpStatus.OK);
+        return new ResponseEntity<>(productName + " removed successfully", HttpStatus.OK);
     }
 }

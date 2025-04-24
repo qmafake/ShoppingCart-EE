@@ -28,7 +28,7 @@ public class CartService {
 
     private final StringBuilder checkoutMsg = new StringBuilder();
 
-    public Map<String, CartItem> getCartItemsMap() { //TODO: Check on this
+    public Map<String, CartItem> getCartItemsMap() {
         return cartItemsMap;
     }
 
@@ -36,6 +36,8 @@ public class CartService {
      * Calculate subtotal, tax and total
      */
     public String checkoutCart() {
+
+        checkoutMsg.setLength(0); //clear string builder
 
         BigDecimal subTotal = new BigDecimal(0);
         BigDecimal tax;
@@ -51,18 +53,12 @@ public class CartService {
             subTotal = subTotal.add(item.getUnitPrice().multiply(BigDecimal.valueOf(item.getQuantity())));
         }
 
-        logger.info("Subtotal = {}", subTotal);
         checkoutMsg.append("Subtotal = ").append(subTotal);
-
-        logger.info("Tax rate is: {}%", taxPercentage);
 
         BigDecimal taxRate = taxPercentage.movePointLeft(2);
 
-        logger.info("Tax rate in decimal: {} %", taxRate);
-
         tax = subTotal.multiply(taxRate).setScale(2 , RoundingMode.HALF_UP);
 
-        logger.info("Tax is: {}", tax);
         checkoutMsg.append("\nTax = ").append(tax);
 
         checkoutMsg.append("\nTotal = ").append(subTotal.add(tax));
@@ -112,7 +108,7 @@ public class CartService {
         }
     }
 
-    public StringBuilder getCheckoutMsg() {
-        return checkoutMsg;
+    public String getCheckoutMsg() {
+        return checkoutMsg.toString();
     }
 }
