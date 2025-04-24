@@ -27,13 +27,7 @@ public class ProductPriceClientService {
 
         try {
 
-//            String priceUrlPath = priceUrl.concat(product).concat(".json");
-
-//            String priceUrlPath = "https://equalexperts.github.io/backend-take-home-test-data/" + product + ".json";
-
-            String priceUrlPath = "http://localhost:8099/" + product + ".json";
-            //TODO: just testing Mock Stub
-
+            String priceUrlPath = priceUrl.concat(product).concat(".json");
 
             logger.info("Fetching {} price:  {}", product, priceUrlPath);
 

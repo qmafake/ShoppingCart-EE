@@ -9,16 +9,10 @@ import org.springframework.test.context.TestPropertySource;
 
 import java.math.BigDecimal;
 
-import static com.github.tomakehurst.wiremock.client.WireMock.*;
-import static org.junit.jupiter.api.Assertions.*;
-
-import com.github.tomakehurst.wiremock.WireMockServer;
-import com.github.tomakehurst.wiremock.core.WireMockConfiguration;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 @SpringBootTest
-@TestPropertySource(properties = {
-        "spring.price.endpoint=http://localhost:8099/"
-})
 public class ProductPriceClientServiceIntegrationTest {
 
     @Autowired
@@ -27,12 +21,12 @@ public class ProductPriceClientServiceIntegrationTest {
     @Test
     void testFetchItemPrice_liveWithMockedServer() {
 
-        String product = "cornflakes";
+        String product = "cheerios";
 
         ProductPrice result = productPriceClientService.fetchItemPrice(product);
 
-        assertEquals("cornflakes", result.getProductName());
-        assertEquals(BigDecimal.valueOf(2.52), result.getPrice());
+        assertEquals("Cheerios", result.getProductName());
+        assertEquals(BigDecimal.valueOf(8.43), result.getPrice());
 
     }
 
